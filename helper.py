@@ -65,7 +65,7 @@ def adjust_pace(minutes: int, seconds: int, dewtemp: float):
     adjusted_seconds = adjustment*total_seconds+total_seconds
     result = time.strftime("%M:%S", time.gmtime(adjusted_seconds))
 
-    return result
+    return result, adjustment
 
 def determine_adjustment(total):
   
@@ -103,6 +103,10 @@ def adjust_pace_from_weather_at_location(location: str, days_from_now: int, hour
 
     Returns:
         the adjusted pace that the runner should target
+        the adjustment % used
+        the temperature for the date and time
+        the dew point for the date and time
+        
     
     """
 
@@ -110,9 +114,10 @@ def adjust_pace_from_weather_at_location(location: str, days_from_now: int, hour
 
     dewtemp = parse_forecast_for_dewtemp(days_from_now,hour_of_day,forecast)
 
+    #get new pace and the adjustment %
     result = adjust_pace(pace_minutes, pace_seconds, dewtemp)
 
-    return result
+    return result[0], result[1], dewtemp[0], dewtemp[1]
 
 
 WELCOME_MESSAGE = """Hi!
@@ -137,7 +142,7 @@ The user should provide the location, date, time and pace.
 
 You should then convert the user input to the arguments for the adjust_pace_from_weather_at_location function and call that function.
 
-The adjust_pace_from_weather_at_location function will take the location, look up the temperature and dew point at the given date, time and location and then make the necessary adjustment
+The adjust_pace_from_weather_at_location function will take the location, look up the temperature and dew point at the given date, time and location and then make the necessary adjustment and return the required details
 
 If you are unable to convert the user input to the arguments for the adjust_pace_from_weather_at_location function you should ask the user for additional information.
 
