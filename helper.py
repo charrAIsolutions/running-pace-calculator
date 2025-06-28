@@ -1,3 +1,4 @@
+import streamlit as st
 import os
 
 import urllib.request
@@ -25,7 +26,7 @@ def get_weather_at_location(location: str):
     api_location = re.sub(r'[^a-zA-Z0-9\s]', '', location).replace(" ", "%20")
     #print(api_location)
     load_dotenv(override=True)
-    weather_key = os.environ['WEATHER_KEY']
+    weather_key = st.secrets["WEATHER_KEY"]
     #print(weather_key)
     url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + api_location + "?unitGroup=us&include=hours&key=" + weather_key + "&contentType=json"
     #print(url)
