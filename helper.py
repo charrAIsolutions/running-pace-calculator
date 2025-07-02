@@ -145,7 +145,7 @@ def adjust_target_pace_from_weather_at_location(location: str, date: str, hour_o
     Args:
         location: the location that the runner will be running
         date: the date that the runner will be targeting the pace, in the format: YYYY-MM-DD
-        hour_of_day: the hour of the day the runner will be running
+        hour_of_day: the hour of the day the runner will be running (24 hour time)
         pace_minutes: the minute portion of the pace, ex: for 5:16 pace, this would be 5
         pace_seconds: the seconds portion of the pace, ex: for 5:16 pace, this would be 16
 
@@ -171,6 +171,8 @@ SYSTEM_PROMPT_TARGET = """
 You are a helpful assistant and your job is to convert a user's target running pace to a more appropriate running pace given the weather at a given location.
 
 The user should provide the location, date, time and pace.
+
+If the user provides a time that does not indicate AM or PM, you should confirm this before proceeding
 
 You should then convert the user input to the arguments for the adjust_pace_from_weather_at_location function and call that function.
 
@@ -217,7 +219,7 @@ def adjust_performance_pace_from_weather_at_location(location: str, date: str, h
     Args:
         location: the location that the runner will be running
         date: the date that the runner achieved the performance pace, in the format: YYYY-MM-DD
-        hour_of_day: the hour of the day the runner will be running
+        hour_of_day: the hour of the day the runner will be running (24 hour time)
         pace_minutes: the minute portion of the pace, ex: for 5:16 pace, this would be 5
         pace_seconds: the seconds portion of the pace, ex: for 5:16 pace, this would be 16
 
@@ -248,6 +250,9 @@ The user should will provide:
 
 If the user has provided a time and distance ran, you should convert that into the pace they ran.
 Ex: if the user ran a 5k in 20:00, the pace per mile would be 6:26.
+
+If the user provides a time that does not indicate AM or PM, you should confirm this before proceeding
+
 
 You should then convert the user input to the arguments for the adjust_performance_pace_from_weather_at_location function and call that function.
 
